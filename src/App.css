@@ -1,23 +1,11 @@
 /* © 2026 John Doe. All rights reserved. Unauthorized use prohibited. */
 
 /* -----------------------------
-   TAILWIND BASE
------------------------------ */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* -----------------------------
-   GLOBAL RESET / BASE
+   CUSTOM STYLES
 ----------------------------- */
 html, body, #root {
-  height: 100%;
-}
-
-body {
+  min-height: 100%;
   margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: radial-gradient(circle at top, #0a0a0a, #000);
   color: white;
   -webkit-font-smoothing: antialiased;

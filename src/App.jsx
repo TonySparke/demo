@@ -1,8 +1,6 @@
 // © 2026 John Doe. All rights reserved. Unauthorized use prohibited.
 
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const fakeTrace = {
@@ -10,13 +8,13 @@ const fakeTrace = {
   steps: [
     {
       id: "step1",
-      type: "Prompt Loaded",
+      type: "prompt_loaded",
       input: { prompt: "Explain" },
       output: {},
     },
     {
       id: "step2",
-      type: "Model Call",
+      type: "model_call",
       input: { input: "gravity" },
       output: { output: "Gravity is a force that attracts objects with mass." },
     },
@@ -31,123 +29,123 @@ const fakeTrace = {
 export default function LandingPage() {
   const [trace, setTrace] = useState(null);
 
-  const runDemo = () => setTrace(fakeTrace);
+  const runDemo = () => {
+    setTrace(fakeTrace);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-100 text-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
 
       {/* HERO */}
-      <section className="text-center py-24 px-6 max-w-5xl mx-auto">
+      <section className="text-center py-24 px-6">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-6xl font-bold mb-6 leading-tight"
+          className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
         >
-          Understand, Debug, and Optimize Your AI Systems
+          Debug AI Systems <br /> <span className="text-gray-400">Cut LLM Costs by 50%</span>
         </motion.h1>
-        <p className="text-xl text-gray-600 mb-10">
-          Deterministic replay. Step-level caching. Full transparency.
+
+        <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+          Deterministic replay, step-level caching, and prompt evaluation — all in one powerful platform.
         </p>
+
         <div className="flex justify-center gap-4">
-          <Button onClick={runDemo} className="rounded-2xl px-6 py-4 text-lg">
+          <button
+            onClick={runDemo}
+            className="px-8 py-4 bg-white text-black rounded-2xl font-semibold shadow-lg hover:scale-105 transition"
+          >
             Run Live Demo
-          </Button>
-          <Button variant="outline" className="rounded-2xl px-6 py-4 text-lg">
+          </button>
+
+          <button className="px-8 py-4 border border-gray-700 rounded-2xl hover:bg-gray-800 transition">
             View Docs
-          </Button>
+          </button>
         </div>
       </section>
 
       {/* DEMO */}
       {trace && (
-        <section className="py-16 px-6 max-w-4xl mx-auto">
-          <h2 className="text-3xl font-semibold mb-8 text-center">Live Execution Trace</h2>
+        <section className="py-16 px-6 max-w-5xl mx-auto">
+          <h2 className="text-3xl font-semibold mb-8 text-center">Execution Trace</h2>
 
           <div className="space-y-6">
-            {trace.steps.map((step, i) => (
+            {trace.steps.map((step, index) => (
               <motion.div
                 key={step.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: index * 0.1 }}
+                className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg"
               >
-                <Card className="rounded-2xl shadow-md">
-                  <CardContent className="p-5">
-                    <p className="font-semibold mb-2">{step.type}</p>
-                    <pre className="text-sm text-gray-500 bg-gray-50 p-3 rounded-lg overflow-x-auto">
-                      {JSON.stringify(step.input, null, 2)}
-                    </pre>
-                    {step.output.output && (
-                      <p className="mt-3 text-green-600 font-medium">
-                        {step.output.output}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+                <div className="flex justify-between items-center mb-3">
+                  <p className="font-semibold text-lg">{step.type}</p>
+                  <span className="text-xs text-gray-500">#{step.id}</span>
+                </div>
+
+                <pre className="text-sm text-gray-400 bg-black p-4 rounded-xl overflow-x-auto">
+                  {JSON.stringify(step.input, null, 2)}
+                </pre>
+
+                {step.output.output && (
+                  <p className="mt-4 text-green-400 font-medium">
+                    {step.output.output}
+                  </p>
+                )}
               </motion.div>
             ))}
           </div>
 
           {/* METRICS */}
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
             <MetricCard label="Total Cost" value={`$${trace.metrics.total_cost}`} />
             <MetricCard label="Cache Savings" value={`$${trace.metrics.cache_savings}`} />
-            <MetricCard label="Net Cost" value={`$${trace.metrics.net_cost}`} />
+            <MetricCard label="Net Cost" value={`$${trace.metrics.net_cost}`} highlight />
           </div>
         </section>
       )}
 
       {/* PROBLEM */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-          <div>
-            <h2 className="text-4xl font-bold mb-6">
-              AI systems fail silently
-            </h2>
-            <ul className="space-y-4 text-lg text-gray-600">
-              <li>❌ Prompts degrade over time</li>
-              <li>❌ Outputs become inconsistent</li>
-              <li>❌ Costs spiral without visibility</li>
-              <li>❌ Debugging is reactive, not proactive</li>
-            </ul>
-          </div>
+      <section className="py-20 px-6 text-center">
+        <h2 className="text-3xl font-semibold mb-10">AI Systems Break Silently</h2>
 
-          <Card className="rounded-2xl shadow-lg">
-            <CardContent className="p-6 text-lg">
-              <p>
-                Most teams ship AI without observability. You're flying blind.
-                <br /><br />
-                This platform gives you full control.
-              </p>
-            </CardContent>
-          </Card>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          {[
+            "Prompts break silently",
+            "Outputs change unpredictably",
+            "Costs keep rising",
+            "Debugging is guesswork",
+          ].map((item, i) => (
+            <div key={i} className="p-6 bg-gray-900 rounded-2xl border border-gray-800">
+              {item}
+            </div>
+          ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 text-center bg-gradient-to-r from-gray-900 to-black text-white">
-        <h2 className="text-4xl font-bold mb-6">
-          Take control of your AI stack
-        </h2>
-        <p className="text-lg text-gray-300 mb-8">
-          Reduce costs. Improve reliability. Ship faster.
-        </p>
-        <Button className="rounded-2xl px-8 py-5 text-lg">
+      <section className="py-24 text-center">
+        <h2 className="text-4xl font-bold mb-6">Start Optimizing Today</h2>
+        <p className="text-gray-400 mb-8">Join developers building reliable AI systems.</p>
+
+        <button className="px-10 py-5 bg-white text-black rounded-2xl font-semibold shadow-lg hover:scale-105 transition">
           Get Started
-        </Button>
+        </button>
       </section>
 
     </div>
   );
 }
 
-function MetricCard({ label, value }) {
+function MetricCard({ label, value, highlight }) {
   return (
-    <Card className="rounded-2xl shadow">
-      <CardContent className="p-6 text-center">
-        <p className="text-sm text-gray-500 mb-2">{label}</p>
-        <p className="text-2xl font-bold">{value}</p>
-      </CardContent>
-    </Card>
+    <div
+      className={`p-6 rounded-2xl border ${
+        highlight ? "bg-white text-black" : "bg-gray-900 border-gray-800"
+      }`}
+    >
+      <p className="text-sm opacity-70">{label}</p>
+      <p className="text-2xl font-bold mt-2">{value}</p>
+    </div>
   );
 }

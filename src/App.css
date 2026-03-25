@@ -112,6 +112,187 @@ html, body, #root {
 }
 
 /* -----------------------------
+   PAGE LAYOUT
+----------------------------- */
+.page-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0a0a0a 0%, #000 60%);
+  color: #fff;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.hero {
+  text-align: center;
+  padding: 6rem 1.5rem;
+  color: #f4f4f5;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.hero h1 span {
+  color: #a8a8b8;
+}
+
+.hero p {
+  max-width: 44rem;
+  margin: 0 auto 2rem;
+  color: #a8a8b8;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sanity-check-section {
+  padding: 0 1.5rem 2.5rem;
+}
+
+.sanity-check-card {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.sanity-check-card h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.sanity-check-card p {
+  color: #c4c4cc;
+  margin-bottom: 1.5rem;
+}
+
+.section-container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.section-footer {
+  text-align: center;
+  padding: 4rem 1.5rem;
+}
+
+.cta-subtitle {
+  color: #a8a8b8;
+  margin-bottom: 2.5rem;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+}
+
+.section-footer .section-title {
+  font-size: 2.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.demo-heading {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  color: #fff;
+}
+
+.demo-container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+}
+
+.trace-item {
+  padding: 1.5rem;
+  background: rgba(23, 23, 23, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.trace-item:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.trace-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 1.125rem;
+  letter-spacing: 0.05em;
+}
+
+.trace-id {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.metric-card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.metric-card.highlight {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
+.metric-card:not(.highlight) {
+  background: rgba(23, 23, 23, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.metric-card:hover:not(.highlight) {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.metric-label {
+  font-size: 0.875rem;
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 1.875rem;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  margin-top: 0.5rem;
+}
+
+/* -----------------------------
    SCROLLBAR (nice detail)
 ----------------------------- */
 ::-webkit-scrollbar {

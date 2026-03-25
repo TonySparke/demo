@@ -35,76 +35,78 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-950 text-white">
+    <div className="page-container">
 
       {/* HERO */}
-      <section className="text-center py-28 px-6">
+      <section className="hero">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-5xl md:text-6xl font-bold mb-6 leading-tight tracking-tight"
         >
           Debug AI Systems <br />
-          <span className="text-gray-400">Cut LLM Costs by 50%</span>
+          <span>Cut LLM Costs by 50%</span>
         </motion.h1>
 
-        <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+        <p>
           Deterministic replay, step-level caching, and prompt evaluation — all in one powerful platform.
         </p>
 
-        <div className="flex justify-center gap-4">
+        <div className="button-group">
           <button
             onClick={runDemo}
-            className="px-8 py-4 bg-white text-black rounded-2xl font-semibold shadow-xl hover:scale-105 active:scale-95 transition"
+            className="btn-primary"
           >
             Run Live Demo
           </button>
 
-          <button className="px-8 py-4 border border-gray-700 rounded-2xl hover:bg-gray-800 transition">
+          <button className="btn-secondary">
             View Docs
           </button>
         </div>
       </section>
 
+      {/* LOCAL CHECK: custom App.css card and button */}
+      <section className="sanity-check-section">
+        <div className="card sanity-check-card">
+          <h3>CSS Sanity Check</h3>
+          <p>If you see this still-glassy translucent card style, App.css is active.</p>
+          <button className="btn-primary">I am styled from App.css</button>
+        </div>
+      </section>
+
       {/* DEMO */}
       {trace && (
-        <section className="py-20 px-6 max-w-5xl mx-auto">
+        <section className="demo-container">
           <motion.h2
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-3xl font-semibold mb-10 text-center"
+            className="demo-heading"
           >
             Execution Trace
           </motion.h2>
 
-          <div className="space-y-6">
+          <div>
             {trace.steps.map((step, index) => (
               <motion.div
                 key={step.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.12 }}
-                className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-xl hover:border-gray-700 transition"
+                className="trace-item"
               >
-                <div className="flex justify-between items-center mb-4">
-                  <p className="font-semibold text-lg tracking-wide">
-                    {step.type}
-                  </p>
-                  <span className="text-xs text-gray-500">#{step.id}</span>
+                <div className="trace-header">
+                  <p>{step.type}</p>
+                  <span className="trace-id">#{step.id}</span>
                 </div>
 
-                <div className="bg-black/60 p-4 rounded-xl border border-gray-800">
-                  <pre className="text-sm text-gray-400 overflow-x-auto">
-                    {JSON.stringify(step.input, null, 2)}
-                  </pre>
-                </div>
+                <pre className="code-block">
+                  {JSON.stringify(step.input, null, 2)}
+                </pre>
 
                 {step.output.output && (
-                  <div className="mt-4 p-4 bg-green-900/20 border border-green-800 rounded-xl">
-                    <p className="text-green-400 font-medium">
-                      {step.output.output}
-                    </p>
+                  <div className="output-success">
+                    {step.output.output}
                   </div>
                 )}
               </motion.div>
@@ -112,7 +114,7 @@ export default function LandingPage() {
           </div>
 
           {/* METRICS */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="metrics-grid">
             <MetricCard label="Total Cost" value={`$${trace.metrics.total_cost}`} />
             <MetricCard label="Cache Savings" value={`$${trace.metrics.cache_savings}`} />
             <MetricCard label="Net Cost" value={`$${trace.metrics.net_cost}`} highlight />
@@ -121,10 +123,10 @@ export default function LandingPage() {
       )}
 
       {/* PROBLEM */}
-      <section className="py-24 px-6 text-center">
-        <h2 className="text-3xl font-semibold mb-12">AI Systems Break Silently</h2>
+      <section className="section-container text-center">
+        <h2 className="section-title">AI Systems Break Silently</h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div className="grid-cards">
           {[
             "Prompts break silently",
             "Outputs change unpredictably",
@@ -136,7 +138,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="p-6 bg-gray-900 rounded-2xl border border-gray-800 hover:border-gray-700 hover:scale-[1.02] transition"
+              className="card"
             >
               {item}
             </motion.div>
@@ -145,15 +147,15 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-28 text-center">
-        <h2 className="text-4xl font-bold mb-6 tracking-tight">
+      <section className="section-container section-footer">
+        <h2 className="section-title">
           Start Optimizing Today
         </h2>
-        <p className="text-gray-400 mb-10">
+        <p className="cta-subtitle">
           Join developers building reliable AI systems.
         </p>
 
-        <button className="px-10 py-5 bg-white text-black rounded-2xl font-semibold shadow-xl hover:scale-105 active:scale-95 transition">
+        <button className="btn-primary">
           Get Started
         </button>
       </section>
@@ -167,14 +169,10 @@ function MetricCard({ label, value, highlight }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`p-6 rounded-2xl border transition ${
-        highlight
-          ? "bg-white text-black shadow-xl"
-          : "bg-gray-900 border-gray-800 hover:border-gray-700"
-      }`}
+      className={`metric-card ${highlight ? 'highlight' : ''}`}
     >
-      <p className="text-sm opacity-70">{label}</p>
-      <p className="text-3xl font-bold mt-2 tracking-tight">{value}</p>
+      <p className="metric-label">{label}</p>
+      <p className="metric-value">{value}</p>
     </motion.div>
   );
 }

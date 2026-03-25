@@ -9,21 +9,23 @@ const fakeTrace = {
   columns: [
     {
       id: "initial",
-      title: "Initial Call",
-      subtitle: "Storage Retrieval",
-      output: "Gravity is a force that attracts objects with mass.",
+      title: "Initial Run",
+      prompt: "explain gravity",
+      responseLabel: "Computed",
+      response: "Gravity is a force that attracts objects with mass.",
+      responseStyle: "computed",
+      cost: "0.008",
     },
     {
       id: "subsequent",
-      title: "Subsequent Calls",
-      subtitle: "Cache Hit",
-      output: "Gravity is a force that attracts objects with mass.",
+      title: "Subsequent Runs",
+      prompt: "explain gravity",
+      responseLabel: "Retrieved",
+      response: "Gravity is a force that attracts objects with mass.",
+      responseStyle: "retrieved",
+      savings: "0.008",
     },
   ],
-  modelCall: {
-    title: "Model Call",
-    cost: 0.008,
-  },
   metrics: {
     total_cost: 0.012,
     cache_savings: 0.008,
@@ -81,29 +83,37 @@ export default function LandingPage() {
             Execution Trace
           </motion.h2>
 
-          <div className="trace-items-wrapper">
-            {trace.steps.map((step, index) => (
+          <div className="trace-columns-wrapper">
+            {trace.columns.map((column, index) => (
               <motion.div
-                key={step.id}
+                key={column.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.12 }}
-                className="trace-item"
+                className="trace-column"
               >
-                <div className="trace-header">
-                  <p>{step.type}</p>
-                  <span className="trace-id">#{step.id}</span>
+                <div className="column-header">
+                  <h3>{column.title}</h3>
                 </div>
 
-                <pre className="code-block">
-                  {JSON.stringify(step.input, null, 2)}
-                </pre>
+                {/* Prompt Box */}
+                <div className="trace-box prompt-box">
+                  <div className="box-label">Prompt:</div>
+                  <div className="box-content">{column.prompt}</div>
+                </div>
 
-                {step.output.output && (
-                  <div className="output-success">
-                    {step.output.output}
+                {/* Response Box */}
+                <div className={`trace-box response-box response-${column.responseStyle}`}>
+                  <div className="box-label">{column.responseLabel}</div>
+                  <div className="box-content">{column.response}</div>
+                </div>
+
+                {/* Cost Box */}
+                <div className="trace-box cost-box">
+                  <div className="box-content">
+                    {column.cost ? `cost = $${column.cost}` : `savings = $${column.savings}`}
                   </div>
-                )}
+                </div>
               </motion.div>
             ))}
           </div>

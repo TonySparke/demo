@@ -152,27 +152,6 @@ html, body, #root {
   flex-wrap: wrap;
 }
 
-.sanity-check-section {
-  padding: 0 1.5rem 2.5rem;
-}
-
-.sanity-check-card {
-  max-width: 40rem;
-  margin: 0 auto;
-}
-
-.sanity-check-card h3 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.75rem;
-  color: #fff;
-}
-
-.sanity-check-card p {
-  color: #c4c4cc;
-  margin-bottom: 1.5rem;
-}
-
 .section-container {
   max-width: 72rem;
   margin: 0 auto;
@@ -221,13 +200,24 @@ html, body, #root {
   padding: 5rem 1.5rem;
 }
 
-.trace-item {
-  padding: 1.5rem;
-  background: rgba(23, 23, 23, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  transition: all 0.3s ease;
-  margin-bottom: 1.5rem;
+.trace-items-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.trace-items-wrapper .trace-item:nth-child(n+3) {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .trace-items-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .trace-items-wrapper .trace-item:nth-child(n+3) {
+    grid-column: 1;
+  }
 }
 
 .trace-item:hover {

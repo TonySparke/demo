@@ -6,20 +6,24 @@ import "./App.css";
 
 const fakeTrace = {
   id: "abc123",
-  steps: [
+  columns: [
     {
-      id: "step1",
-      type: "prompt_loaded",
-      input: { prompt: "Explain" },
-      output: {},
+      id: "initial",
+      title: "Initial Call",
+      subtitle: "Storage Retrieval",
+      output: "Gravity is a force that attracts objects with mass.",
     },
     {
-      id: "step2",
-      type: "model_call",
-      input: { input: "gravity" },
-      output: { output: "Gravity is a force that attracts objects with mass." },
+      id: "subsequent",
+      title: "Subsequent Calls",
+      subtitle: "Cache Hit",
+      output: "Gravity is a force that attracts objects with mass.",
     },
   ],
+  modelCall: {
+    title: "Model Call",
+    cost: 0.008,
+  },
   metrics: {
     total_cost: 0.012,
     cache_savings: 0.008,
@@ -57,21 +61,12 @@ export default function LandingPage() {
             onClick={runDemo}
             className="btn-primary"
           >
-            Run Live Demo
+            See Demo
           </button>
 
           <button className="btn-secondary">
             View Docs
           </button>
-        </div>
-      </section>
-
-      {/* LOCAL CHECK: custom App.css card and button */}
-      <section className="sanity-check-section">
-        <div className="card sanity-check-card">
-          <h3>CSS Sanity Check</h3>
-          <p>If you see this still-glassy translucent card style, App.css is active.</p>
-          <button className="btn-primary">I am styled from App.css</button>
         </div>
       </section>
 
@@ -86,7 +81,7 @@ export default function LandingPage() {
             Execution Trace
           </motion.h2>
 
-          <div>
+          <div className="trace-items-wrapper">
             {trace.steps.map((step, index) => (
               <motion.div
                 key={step.id}

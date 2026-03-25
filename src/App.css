@@ -284,6 +284,16 @@ html, body, #root {
   border-color: rgba(34, 197, 94, 0.25);
 }
 
+.response-base {
+  background: rgba(156, 163, 175, 0.08);
+  border-color: rgba(156, 163, 175, 0.25);
+}
+
+.response-improved {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
 .cost-box {
   background: rgba(59, 130, 246, 0.08);
   border-color: rgba(59, 130, 246, 0.25);

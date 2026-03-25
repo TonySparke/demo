@@ -33,11 +33,74 @@ const fakeTrace = {
   },
 };
 
+const baseTrace = {
+  id: "base",
+  prompt: "Explain in one sentence",
+  input: "gravity",
+  steps: [
+    {
+      id: "step1",
+      type: "prompt_loaded",
+      input: { prompt: "Explain in one sentence" },
+      output: {},
+      cached: true,
+    },
+    {
+      id: "step2",
+      type: "model_call",
+      input: { input: "gravity" },
+      output: {
+        output: "Gravity is a force that attracts objects with mass toward each other.",
+      },
+      cached: false,
+    },
+  ],
+  metrics: {
+    total_cost: 0.012,
+    cache_savings: 0.0,
+    net_cost: 0.012,
+  },
+};
+
+const improvedTrace = {
+  id: "improved",
+  prompt: "Explain simply in one short sentence",
+  input: "gravity",
+  steps: [
+    {
+      id: "step1",
+      type: "prompt_loaded",
+      input: { prompt: "Explain simply in one short sentence" },
+      output: {},
+      cached: false,
+    },
+    {
+      id: "step2",
+      type: "model_call",
+      input: { input: "gravity" },
+      output: {
+        output: "Gravity is the force that pulls things toward each other.",
+      },
+      cached: false,
+    },
+  ],
+  metrics: {
+    total_cost: 0.012,
+    cache_savings: 0.008,
+    net_cost: 0.004,
+  },
+};
+
 export default function LandingPage() {
   const [trace, setTrace] = useState(null);
+  const [comparisonTrace, setComparisonTrace] = useState(null);
 
   const runDemo = () => {
     setTrace(fakeTrace);
+  };
+
+  const runComparisonDemo = () => {
+    setComparisonTrace({ base: baseTrace, improved: improvedTrace });
   };
 
   return (
@@ -66,8 +129,11 @@ export default function LandingPage() {
             See Demo
           </button>
 
-          <button className="btn-secondary">
-            View Docs
+          <button 
+            onClick={runComparisonDemo}
+            className="btn-secondary"
+          >
+            Optimization
           </button>
         </div>
       </section>
@@ -123,6 +189,64 @@ export default function LandingPage() {
             <MetricCard label="Total Cost" value={`$${trace.metrics.total_cost}`} />
             <MetricCard label="Cache Savings" value={`$${trace.metrics.cache_savings}`} />
             <MetricCard label="Net Cost" value={`$${trace.metrics.net_cost}`} highlight />
+          </div>
+        </section>
+      )}
+
+      {/* COMPARISON DEMO */}
+      {comparisonTrace && (
+        <section className="demo-container">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="demo-heading"
+          >
+            Prompt Optimization
+          </motion.h2>
+
+          <div className="trace-columns-wrapper">
+            {[
+              { title: "Base Prompt", data: comparisonTrace.base, style: "base" },
+              { title: "Optimized Prompt", data: comparisonTrace.improved, style: "improved" },
+            ].map((column, index) => (
+              <motion.div
+                key={column.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.12 }}
+                className="trace-column"
+              >
+                <div className="column-header">
+                  <h3>{column.title}</h3>
+                </div>
+
+                {/* Prompt Box */}
+                <div className="trace-box prompt-box">
+                  <div className="box-label">Prompt:</div>
+                  <div className="box-content">{column.data.prompt}</div>
+                </div>
+
+                {/* Response Box */}
+                <div className={`trace-box response-box response-${column.style}`}>
+                  <div className="box-label">Response</div>
+                  <div className="box-content">{column.data.steps[1].output.output}</div>
+                </div>
+
+                {/* Cost Box */}
+                <div className="trace-box cost-box">
+                  <div className="box-content">
+                    cost = ${column.data.metrics.net_cost}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* METRICS */}
+          <div className="metrics-grid">
+            <MetricCard label="Base Cost" value={`$${comparisonTrace.base.metrics.net_cost}`} />
+            <MetricCard label="Optimized Cost" value={`$${comparisonTrace.improved.metrics.net_cost}`} />
+            <MetricCard label="Savings" value={`$${comparisonTrace.base.metrics.net_cost - comparisonTrace.improved.metrics.net_cost}`} highlight />
           </div>
         </section>
       )}

@@ -97,10 +97,12 @@ export default function LandingPage() {
 
   const runDemo = () => {
     setTrace(fakeTrace);
+    setComparisonTrace(null);
   };
 
   const runComparisonDemo = () => {
     setComparisonTrace({ base: baseTrace, improved: improvedTrace });
+    setTrace(null);
   };
 
   return (
@@ -121,20 +123,23 @@ export default function LandingPage() {
           Deterministic replay, step-level caching, and prompt evaluation — all in one powerful platform.
         </p>
 
-        <div className="button-group">
-          <button
-            onClick={runDemo}
-            className="btn-primary"
-          >
-            See Demo
-          </button>
+        <div className="demo-controls">
+          <h3 className="demo-controls-title">DEMO</h3>
+          <div className="button-group">
+            <button
+              onClick={runDemo}
+              className="btn-primary"
+            >
+              Cache Savings
+            </button>
 
-          <button 
-            onClick={runComparisonDemo}
-            className="btn-secondary"
-          >
-            Optimization
-          </button>
+            <button 
+              onClick={runComparisonDemo}
+              className="btn-secondary"
+            >
+              Model Selector
+            </button>
+          </div>
         </div>
       </section>
 
